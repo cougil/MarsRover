@@ -9,6 +9,14 @@ public class Coordinates {
         this.y = y;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -22,11 +30,29 @@ public class Coordinates {
         return true;
     }
 
+
     @Override
     public String toString() {
         return "Coordinates{" +
                 "x=" + x +
                 ", y=" + y +
                 '}';
+    }
+
+    public void move(Direction direction) {
+        switch (direction) {
+            case NORTH:
+                this.y++;
+                break;
+            case SOUTH:
+                this.y--;
+                break;
+            case EAST:
+                this.x++;
+                break;
+            case WEST:
+                this.x--;
+                break;
+        }
     }
 }

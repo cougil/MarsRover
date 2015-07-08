@@ -25,4 +25,41 @@ public class MarsRoverTest {
         assertEquals( new Coordinates(0,0), marsRover.getCoordinates());
         assertEquals( Direction.NORTH, marsRover.getDirection());
     }
+
+    @Test
+    public void moveForwardShouldMove1PositionUpper() {
+        marsRover.instructions("M");
+        assertEquals(new Coordinates(0,1), marsRover.getCoordinates());
+        assertEquals( Direction.NORTH, marsRover.getDirection());
+    }
+
+    @Test
+    public void turnLeftShouldOrientateWestWithoutMovingThePosition() {
+        marsRover.instructions("L");
+        assertEquals(new Coordinates(0,0), marsRover.getCoordinates());
+        assertEquals( Direction.WEST, marsRover.getDirection());
+    }
+
+    @Test
+    public void turnRightShouldOrientateEastWithoutMovingThePosition() {
+        marsRover.instructions("R");
+        assertEquals(new Coordinates(0,0), marsRover.getCoordinates());
+        assertEquals( Direction.EAST, marsRover.getDirection());
+    }
+
+    @Test
+    public void singleInstructionShouldWorkIgnoringCase() {
+        marsRover.instructions("r");
+        assertEquals(new Coordinates(0,0), marsRover.getCoordinates());
+        assertEquals( Direction.EAST, marsRover.getDirection());
+    }
+
+    @Test
+    public void multipleInstructionsShouldWorkIgnoringCase() {
+        marsRover.instructions("mr");
+        assertEquals(new Coordinates(0,1), marsRover.getCoordinates());
+        assertEquals( Direction.EAST, marsRover.getDirection());
+    }
+
+
 }

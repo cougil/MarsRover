@@ -1,14 +1,28 @@
-package com.cougil;
+package com.cougil.nasa.parser;
+
+import com.cougil.nasa.domain.Coordinates;
+import com.cougil.nasa.domain.Direction;
+import com.cougil.nasa.domain.MarsRover;
+import com.cougil.nasa.domain.Plateau;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MissionNASA {
+/**
+ * Parser responsible of processing the instructions and information of all the Mars Rovers
+ */
+public class ParserInputMarsRoversImpl implements ParserInputMarsRovers {
 
-    public String run(String inputMission) throws IOException {
-        StringBuilder output = new StringBuilder("");
-        try (BufferedReader br = new BufferedReader(new StringReader(inputMission))) {
+    private List<MarsRoversInstructions> marsRoversInstructions;
+
+    @Override
+    public List<MarsRoversInstructions> parse(String input) throws IOException {
+        marsRoversInstructions = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new StringReader(input))) {
             int lineNum = 0;
             Plateau plateau = null;
             MarsRover marsRover = null;
@@ -18,18 +32,17 @@ public class MissionNASA {
                 } else if (lineNum % 2 == 1) {
                     marsRover = parseMarsRoverPosition(plateau, line);
                 } else if (lineNum % 2 == 0) {
-                    marsRover.instructions(line);
-                    output = output.append( marsRover );
-                    output = output.append("\n");
+                    marsRoversInstructions.add( new MarsRoversInstructions( marsRover, line ));
                 }
                 lineNum++;
             }
-            output = output.delete(output.length()-1,output.length());
         }
-        return output.toString();
+
+        return marsRoversInstructions;
     }
 
-    protected MarsRover parseMarsRoverPosition(Plateau plateau, String line) {
+    @Override
+    public MarsRover parseMarsRoverPosition(Plateau plateau, String line) {
         MarsRover marsRover;
         int pos = line.indexOf(" ");
         int x = Integer.parseInt(line.substring(0,pos));
@@ -40,7 +53,8 @@ public class MissionNASA {
         return marsRover;
     }
 
-    protected Plateau parsePlateau(String line) {
+    @Override
+    public Plateau parsePlateau(String line) {
         Plateau plateau;
         int pos = line.lastIndexOf(" ");
         int maxX = Integer.parseInt(line.substring(0,pos));

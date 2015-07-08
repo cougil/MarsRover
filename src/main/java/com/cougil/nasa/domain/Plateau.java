@@ -1,5 +1,8 @@
-package com.cougil;
+package com.cougil.nasa.domain;
 
+/**
+ * Plateau where the robots will land
+ */
 public class Plateau {
     private final int maximumX;
     private final int maximumY;

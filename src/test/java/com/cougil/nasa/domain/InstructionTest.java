@@ -1,4 +1,4 @@
-package com.cougil;
+package com.cougil.nasa.domain;
 
 import org.junit.Test;
 

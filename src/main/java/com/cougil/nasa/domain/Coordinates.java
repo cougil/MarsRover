@@ -1,5 +1,8 @@
-package com.cougil;
+package com.cougil.nasa.domain;
 
+/**
+ * Represents a position in the plateau of any robotic rover
+ */
 public class Coordinates {
     private int x;
     private int y;
@@ -28,15 +31,6 @@ public class Coordinates {
         if (y != that.y) return false;
 
         return true;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Coordinates{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
     }
 
     public void move(Direction direction) {

@@ -1,5 +1,8 @@
-package com.cougil;
+package com.cougil.nasa.domain;
 
+/**
+ * Represents one of the directions that any rover could obtain
+ */
 public enum Direction {
     NORTH(0, 'N'), EAST(1, 'E'), SOUTH(2, 'S'), WEST(3, 'W');
 
@@ -20,7 +23,7 @@ public enum Direction {
     }
 
     /**
-     * Return that will be the next Direction following the {@link com.cougil.Instruction} specified.
+     * Return that will be the next Direction following the {@link Instruction} specified.
      * It returns the same Direction in case the instruction is not LEFT or RIGHT: because we don't know where to
      * look for, we will continue looking to the same Direction we were previously
      * @param instruction The instruction to follow

@@ -1,4 +1,4 @@
-package com.cougil;
+package com.cougil.nasa.domain;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +29,21 @@ public class DirectionTest {
     @Test
     public void valueOfShouldReturnNullWithAnInvalidDirection() {
         Direction direction = Direction.valueOf(12);
+        assertNull(direction);
+    }
+
+    @Test
+    public void valueOfShortNameShouldReturnAllValidDirections() {
+        Direction[] directions = Direction.values();
+        for(Direction direction : directions) {
+            Direction dir = Direction.valueOfShortName(direction.getShortName());
+            assertEquals(direction, dir);
+        }
+    }
+
+    @Test
+    public void valueOfShortNameShouldReturnNullWithAnInvalidDirection() {
+        Direction direction = Direction.valueOfShortName('z');
         assertNull(direction);
     }
 

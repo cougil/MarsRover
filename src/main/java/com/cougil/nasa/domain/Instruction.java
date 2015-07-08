@@ -1,5 +1,8 @@
-package com.cougil;
+package com.cougil.nasa.domain;
 
+/**
+ * Available instructions to deliver to any rover
+ */
 public enum Instruction {
     LEFT('L'), RIGHT('R'), MOVE('M');
 

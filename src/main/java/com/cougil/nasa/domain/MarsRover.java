@@ -1,5 +1,8 @@
-package com.cougil;
+package com.cougil.nasa.domain;
 
+/**
+ * Class that represents a Mars Rovers
+ */
 public class MarsRover {
     private Coordinates coordinates;
     private Direction direction;

@@ -47,10 +47,27 @@ public class MarsRover {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MarsRover marsRover = (MarsRover) o;
+
+        if (coordinates != null ? !coordinates.equals(marsRover.coordinates) : marsRover.coordinates != null)
+            return false;
+        if (direction != marsRover.direction) return false;
+        if (plateau != null ? !plateau.equals(marsRover.plateau) : marsRover.plateau != null) return false;
+
+        return true;
+    }
+
+    @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder = stringBuilder.append(coordinates.getX());
+        stringBuilder = stringBuilder.append(" ");
         stringBuilder = stringBuilder.append(coordinates.getY());
+        stringBuilder = stringBuilder.append(" ");
         stringBuilder = stringBuilder.append(direction.getShortName());
         return stringBuilder.toString();
     }

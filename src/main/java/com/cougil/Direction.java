@@ -1,16 +1,22 @@
 package com.cougil;
 
 public enum Direction {
-    NORTH(0), EAST(1), SOUTH(2), WEST(3);
+    NORTH(0, 'N'), EAST(1, 'E'), SOUTH(2, 'S'), WEST(3, 'W');
 
     private final int value;
+    private final char shortName;
 
-    private Direction(int value) {
+    private Direction(int value, char shortName) {
         this.value = value;
+        this.shortName = shortName;
     }
 
     public int getValue() {
         return value;
+    }
+
+    public char getShortName() {
+        return shortName;
     }
 
     /**
@@ -44,6 +50,23 @@ public enum Direction {
         Direction[] directions = values();
         for(int i=0;i<directions.length && direction == null; i++) {
             if (directions[i].getValue() == value) {
+                direction = directions[i];
+            }
+        }
+        return direction;
+    }
+
+    /**
+     * Returns the Direction that has the same shortName specified or null in other case
+     * @param shortName The shortname to look for a Direction
+     * @return the Direction found or null
+     */
+    public static Direction valueOfShortName(char shortName) {
+        char upperShortName = Character.toUpperCase(shortName);
+        Direction direction = null;
+        Direction[] directions = values();
+        for(int i=0;i<directions.length && direction == null; i++) {
+            if (directions[i].getShortName() == upperShortName) {
                 direction = directions[i];
             }
         }

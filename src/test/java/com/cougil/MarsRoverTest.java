@@ -21,9 +21,10 @@ public class MarsRoverTest {
     }
 
     @Test
-    public void initialPositionShouldBe_0_0_Facing_North() {
+    public void initialPositionShouldBe_0_0_Facing_North_Plateau_10x10() {
         assertEquals( new Coordinates(0,0), marsRover.getCoordinates());
         assertEquals( Direction.NORTH, marsRover.getDirection());
+        assertEquals( new Plateau(10,10), marsRover.getPlateau() );
     }
 
     @Test

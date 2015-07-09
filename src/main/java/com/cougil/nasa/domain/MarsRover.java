@@ -6,7 +6,7 @@ package com.cougil.nasa.domain;
 public class MarsRover {
     private Coordinates coordinates;
     private Direction direction;
-    private final Plateau plateau;
+    private Plateau plateau;
 
     public MarsRover() {
         this(new Coordinates(0,0), Direction.NORTH, new Plateau(10,10));
@@ -16,6 +16,7 @@ public class MarsRover {
         this.coordinates = coordinates;
         this.direction = direction;
         this.plateau = plateau;
+        this.plateau.addMarsRover(this);
     }
 
     public Coordinates getCoordinates() {
@@ -30,21 +31,51 @@ public class MarsRover {
         return plateau;
     }
 
+    /**
+     * Moves the Mars Rovers, taking care of the instructions: if they are recognized or not, they will make something
+     * (changing direction or moving forward) or not. Also, the rover tries to figure out if the coordinate they will
+     * want to move there is any other Mars Rovers in there, and in this case it won't move it.
+     *
+     * @param instructions The instructions to be followed by the Mars Rover
+     */
     public void instructions(String instructions) {
         for (char instructionChar: instructions.toCharArray()) {
             Instruction instruction = Instruction.valueOf(instructionChar);
-            switch (instruction) {
-                case LEFT:
-                    this.direction = this.direction.turn(Instruction.LEFT);
-                    break;
-                case RIGHT:
-                    this.direction = this.direction.turn(Instruction.RIGHT);
-                    break;
-                case MOVE:
-                        this.getCoordinates().move(getDirection());
-                    break;
-                default:
-                    break;
+            if (instruction != null) {
+                switch (instruction) {
+                    case LEFT:
+                        this.direction = this.direction.turn(Instruction.LEFT);
+                        break;
+                    case RIGHT:
+                        this.direction = this.direction.turn(Instruction.RIGHT);
+                        break;
+                    case MOVE:
+                        int x = this.getCoordinates().getX();
+                        int y = this.getCoordinates().getY();
+                        Coordinates newCoordinates = new Coordinates(x,y);
+                        newCoordinates.move(getDirection());
+                        // we must check that there isn't any other MarsRovers there!
+                        if (!this.plateau.existsMarsRover(newCoordinates)) {
+                            this.coordinates = newCoordinates;
+                            x = this.getCoordinates().getX();
+                            y = this.getCoordinates().getY();
+                            if (x > plateau.getMaximumX()) {
+                                x = 0;
+                            } else if (x < 0) {
+                                x = plateau.getMaximumX();
+                            }
+                            if (y > plateau.getMaximumY()) {
+                                y = 0;
+                            } else if (y < 0) {
+                                y = plateau.getMaximumY();
+                            }
+                            newCoordinates = new Coordinates(x, y);
+                            if (!this.plateau.existsMarsRover(newCoordinates)) {
+                                this.coordinates = newCoordinates;
+                            }
+                        }
+                        break;
+                }
             }
         }
     }

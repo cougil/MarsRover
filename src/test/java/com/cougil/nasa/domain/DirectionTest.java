@@ -48,11 +48,11 @@ public class DirectionTest {
     }
 
     @Test
-    public void movingShouldReturnThePreviousDirection() {
+    public void movingShouldNotChangeThePreviousDirection() {
         int randomInt = random.nextInt(Direction.values().length);
-        Direction direction = Direction.values()[randomInt];
-        Direction newDirection = direction.turn(Instruction.MOVE);
-        assertEquals(direction, newDirection);
+        Direction previousDirection = Direction.values()[randomInt];
+        Direction newDirection = previousDirection.turn(Instruction.MOVE);
+        assertEquals(previousDirection, newDirection);
     }
 
     @Test

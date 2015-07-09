@@ -81,11 +81,59 @@ public class MarsRoverTest {
     }
 
     @Test
-    public void multipleInstructionsShouldWorkIgnoringCase() {
+    public void multipleValidInstructionsShouldWorkIgnoringCase() {
         marsRover.instructions("mr");
         assertEquals(new Coordinates(0, 1), marsRover.getCoordinates());
         assertEquals(Direction.EAST, marsRover.getDirection());
     }
 
+    @Test
+    public void invalidInstructionsShouldNotMoveAnything() {
+        marsRover.instructions("xfjneUhEg2345");
+        assertEquals(new Coordinates(0, 0), marsRover.getCoordinates());
+        assertEquals(Direction.NORTH, marsRover.getDirection());
+    }
+
+    @Test
+    public void movingOutsideOfThePlateauFacingNorthShouldMoveToBottom() {
+        marsRover = new MarsRover( new Coordinates(5,5), Direction.NORTH, new Plateau(5,5));
+        marsRover.instructions("M");
+        assertEquals(new Coordinates(5, 0), marsRover.getCoordinates());
+        assertEquals(Direction.NORTH, marsRover.getDirection());
+    }
+
+    @Test
+    public void movingOutsideOfThePlateauFacingSouthShouldMoveToTheTop() {
+        marsRover = new MarsRover( new Coordinates(0,0), Direction.SOUTH, new Plateau(5,5));
+        marsRover.instructions("M");
+        assertEquals(new Coordinates(0, 5), marsRover.getCoordinates());
+        assertEquals(Direction.SOUTH, marsRover.getDirection());
+    }
+
+    @Test
+    public void movingOutsideOfThePlateauFacingWestShouldMoveToTheRight() {
+        marsRover = new MarsRover( new Coordinates(0,3), Direction.WEST, new Plateau(5,5));
+        marsRover.instructions("M");
+        assertEquals(new Coordinates(5, 3), marsRover.getCoordinates());
+        assertEquals(Direction.WEST, marsRover.getDirection());
+    }
+
+    @Test
+    public void movingOutsideOfThePlateauFacingEastShouldMoveToTheLeft() {
+        marsRover = new MarsRover( new Coordinates(5,4), Direction.EAST, new Plateau(5,5));
+        marsRover.instructions("M");
+        assertEquals(new Coordinates(0, 4), marsRover.getCoordinates());
+        assertEquals(Direction.EAST, marsRover.getDirection());
+    }
+
+    @Test
+    public void moveForwardWhenThereIsOtherMarsRoverInTheSameCoordinatesShouldNotMoveThePosition() {
+        Plateau plateau = new Plateau(5,5);
+        marsRover = new MarsRover( new Coordinates(5,4), Direction.EAST, plateau);
+        MarsRover anotherMarsRover = new MarsRover( new Coordinates(5,1), Direction.NORTH, plateau);
+        anotherMarsRover.instructions("MMMMMR");
+        assertEquals(new Coordinates(5, 3), anotherMarsRover.getCoordinates());
+        assertEquals(Direction.EAST, anotherMarsRover.getDirection());
+    }
 
 }

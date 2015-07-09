@@ -49,4 +49,12 @@ public class Coordinates {
                 break;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Coordinates{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

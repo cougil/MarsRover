@@ -53,31 +53,32 @@ public class MarsRover {
                         int x = this.getCoordinates().getX();
                         int y = this.getCoordinates().getY();
                         Coordinates newCoordinates = new Coordinates(x,y);
-                        newCoordinates.move(getDirection());
+                        newCoordinates = newCoordinates.move(getDirection());
+                        newCoordinates = evaluatePlateauCoordinatesLimits(newCoordinates);
                         // we must check that there isn't any other MarsRovers there!
                         if (!this.plateau.existsMarsRover(newCoordinates)) {
                             this.coordinates = newCoordinates;
-                            x = this.getCoordinates().getX();
-                            y = this.getCoordinates().getY();
-                            if (x > plateau.getMaximumX()) {
-                                x = 0;
-                            } else if (x < 0) {
-                                x = plateau.getMaximumX();
-                            }
-                            if (y > plateau.getMaximumY()) {
-                                y = 0;
-                            } else if (y < 0) {
-                                y = plateau.getMaximumY();
-                            }
-                            newCoordinates = new Coordinates(x, y);
-                            if (!this.plateau.existsMarsRover(newCoordinates)) {
-                                this.coordinates = newCoordinates;
-                            }
                         }
                         break;
                 }
             }
         }
+    }
+
+    private Coordinates evaluatePlateauCoordinatesLimits(Coordinates newCoordinates) {
+        int x = newCoordinates.getX();
+        int y = newCoordinates.getY();
+        if (x > plateau.getMaximumX()) {
+            x = 0;
+        } else if (x < 0) {
+            x = plateau.getMaximumX();
+        }
+        if (y > plateau.getMaximumY()) {
+            y = 0;
+        } else if (y < 0) {
+            y = plateau.getMaximumY();
+        }
+        return new Coordinates(x, y);
     }
 
     @Override
@@ -97,13 +98,13 @@ public class MarsRover {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder("");
-        stringBuilder = stringBuilder.append(coordinates.getX());
-        stringBuilder = stringBuilder.append(" ");
-        stringBuilder = stringBuilder.append(coordinates.getY());
-        stringBuilder = stringBuilder.append(" ");
-        stringBuilder = stringBuilder.append(direction.getShortName());
-        return stringBuilder.toString();
+        return new StringBuilder("")
+                .append(coordinates.getX())
+                .append(" ")
+                .append(coordinates.getY())
+                .append(" ")
+                .append(direction.getShortName())
+            .toString();
     }
 
 }

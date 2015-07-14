@@ -29,4 +29,44 @@ public class MainMissionTest {
         String output = this.mainMission.run(input);
         assertEquals(expectedOuput, output);
     }
+
+    @Test
+    public void exampleInputShouldNotLeaveOutsideThePlateauOutput() throws IOException {
+        String input = "5 5\n" +
+                       "4 5 N\n" +
+                       "MM\n"+
+                       "4 0 N\n"+
+                       "MM";
+
+        final String expectedOuput = "4 5 N\n" +
+                                     "4 2 N";
+        String output = this.mainMission.run(input);
+        assertEquals(expectedOuput, output);
+    }
+
+    @Test
+    public void inputWithoutRobotsShouldNotThrowAnyException() throws IOException {
+        String input = "5 5\n";
+
+        final String expectedOuput = "";
+        String output = this.mainMission.run(input);
+        assertEquals(expectedOuput, output);
+    }
+
+    @Test
+    public void invalidInputShouldNotThrowAnyExceptionAndReturnDefaultPositions() throws IOException {
+        String input = "5 5\n"+
+                       "a a t\n" +
+                       "pp\n"+
+                       "b b b\n" +
+                       "ee\n"+
+                       "e e z\n"+
+                       "oo";
+
+        final String expectedOuput = "0 0 N\n" +
+                                     "0 0 N\n"+
+                                     "0 0 N";
+        String output = this.mainMission.run(input);
+        assertEquals(expectedOuput, output);
+    }
 }

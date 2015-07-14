@@ -3,9 +3,9 @@ package com.cougil.nasa.domain;
 /**
  * Represents a position in the plateau of any robotic rover
  */
-public class Coordinates {
-    private int x;
-    private int y;
+public final class Coordinates {
+    private final int x;
+    private final int y;
 
     public Coordinates(int x, int y) {
         this.x = x;
@@ -33,21 +33,24 @@ public class Coordinates {
         return true;
     }
 
-    public void move(Direction direction) {
+    public Coordinates move(Direction direction) {
+        int x = this.getX();
+        int y = this.getY();
         switch (direction) {
             case NORTH:
-                this.y++;
+                y++;
                 break;
             case SOUTH:
-                this.y--;
+                y--;
                 break;
             case EAST:
-                this.x++;
+                x++;
                 break;
             case WEST:
-                this.x--;
+                x--;
                 break;
         }
+        return new Coordinates(x,y);
     }
 
     @Override

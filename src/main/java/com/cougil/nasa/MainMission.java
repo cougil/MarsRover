@@ -36,7 +36,10 @@ public class MainMission {
                 output = output.append( marsRover );
                 output = output.append("\n");
             }
-            output = output.delete(output.length()-1,output.length());
+
+            if (output.length() > 0) {
+                output = output.delete(output.length()-1,output.length());
+            }
 
         } catch (IOException e) {
             // TODO - should log an error or throw the exception

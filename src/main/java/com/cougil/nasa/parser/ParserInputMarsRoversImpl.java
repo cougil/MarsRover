@@ -43,22 +43,35 @@ public class ParserInputMarsRoversImpl implements ParserInputMarsRovers {
 
     @Override
     public MarsRover parseMarsRoverPosition(Plateau plateau, String line) {
-        MarsRover marsRover;
         int pos = line.indexOf(" ");
-        int x = Integer.parseInt(line.substring(0,pos));
-        int y = Integer.parseInt(line.substring(pos+1,line.indexOf(" ",pos+1)));
+        int x, y;
+        try {
+            x = Integer.parseInt(line.substring(0,pos));
+            y = Integer.parseInt(line.substring(pos+1,line.indexOf(" ",pos+1)));
+        } catch (NumberFormatException e) {
+            x = 0;
+            y = 0;
+        }
         Direction direction = Direction.valueOfShortName(line.charAt(line.length()-1));
+        if (direction == null) {
+            direction = Direction.NORTH;
+        }
         Coordinates coordinates = new Coordinates(x,y);
-        marsRover = new MarsRover(coordinates, direction, plateau);
-        return marsRover;
+        return new MarsRover(coordinates, direction, plateau);
     }
 
     @Override
     public Plateau parsePlateau(String line) {
         Plateau plateau;
         int pos = line.lastIndexOf(" ");
-        int maxX = Integer.parseInt(line.substring(0,pos));
-        int maxY = Integer.parseInt(line.substring(pos+1,line.length()));
+        int maxX, maxY;
+        try {
+            maxX = Integer.parseInt(line.substring(0,pos));
+            maxY = Integer.parseInt(line.substring(pos+1,line.length()));
+        } catch (NumberFormatException e) {
+            maxX = 10;
+            maxY = 10;
+        }
         plateau = new Plateau(maxX, maxY);
         return plateau;
     }

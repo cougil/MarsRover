@@ -6,10 +6,10 @@ import java.util.List;
 /**
  * Plateau where the robots will land
  */
-public class Plateau {
+public final class Plateau {
     private final int maximumX;
     private final int maximumY;
-    private List<MarsRover> marsRovers;
+    private final List<MarsRover> marsRovers;
 
     public Plateau(int maximumX, int maximumY) {
         this.maximumX = maximumX;

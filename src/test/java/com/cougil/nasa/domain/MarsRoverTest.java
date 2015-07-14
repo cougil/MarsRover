@@ -96,8 +96,8 @@ public class MarsRoverTest {
 
     @Test
     public void movingOutsideOfThePlateauFacingNorthShouldMoveToBottom() {
-        marsRover = new MarsRover( new Coordinates(5,5), Direction.NORTH, new Plateau(5,5));
-        marsRover.instructions("M");
+        marsRover = new MarsRover( new Coordinates(5,3), Direction.NORTH, new Plateau(5,5));
+        marsRover.instructions("MMM");
         assertEquals(new Coordinates(5, 0), marsRover.getCoordinates());
         assertEquals(Direction.NORTH, marsRover.getDirection());
     }
